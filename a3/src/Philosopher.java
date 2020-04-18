@@ -27,7 +27,7 @@ public class Philosopher extends BaseThread {
       Thread.yield();
       sleep((long) (Math.random() * TIME_TO_WASTE));
       Thread.yield();
-      System.out.println("Philosopher " + getTID() + " is done eating\n");
+      System.out.println("Philosopher " + getTID() + " is done eating");
     } catch (InterruptedException e) {
       System.err.println("Philosopher.eat():");
       DiningPhilosophers.reportException(e);
@@ -50,7 +50,7 @@ public class Philosopher extends BaseThread {
       Thread.yield();
       sleep((long) (Math.random() * TIME_TO_WASTE));
       Thread.yield();
-      System.out.println("Philosopher " + getTID() + " is done thinking\n");
+      System.out.println("Philosopher " + getTID() + " is done thinking");
     } catch (InterruptedException e) {
       System.err.println("Philosopher.think():");
       DiningPhilosophers.reportException(e);
@@ -72,7 +72,7 @@ public class Philosopher extends BaseThread {
     Thread.yield();
     saySomething();
     Thread.yield();
-    System.out.println("Philosopher " + getTID() + " is done talking\n");
+    System.out.println("Philosopher " + getTID() + " is done talking");
   }
 
   /**
