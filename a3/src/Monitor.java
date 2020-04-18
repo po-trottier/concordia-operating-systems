@@ -5,22 +5,18 @@
  * @author Serguei A. Mokhov, mokhov@cs.concordia.ca
  */
 public class Monitor {
+  // STUDENT
+  int count;
+  boolean[] eating;
+  boolean speaking = false;
 
-  boolean [] philosophers;
-  boolean [] chopsticks;
-  boolean isTalking;
   /**
    * Constructor
    */
   public Monitor(int piNumberOfPhilosophers) {
-    // TODO: set appropriate number of chopsticks based on the # of philosophers
-
-    chopsticks = new boolean[piNumberOfPhilosophers];
-    philosophers = new boolean[piNumberOfPhilosophers];
-    isTalking = true;
-
-    for(int i = 0; i < chopsticks.length; i++)
-      chopsticks[i] = true;
+    // STUDENT
+    count = piNumberOfPhilosophers;
+    eating = new boolean[count];
   }
 
   /**
@@ -28,17 +24,19 @@ public class Monitor {
    * Else forces the philosopher to wait()
    */
   public synchronized void pickUp(final int piTID) {
-
-    while (!(chopsticks[(piTID-1)%(chopsticks.length)] && chopsticks[(piTID)%(chopsticks.length)])) {
-      try {
-        this.wait();
-      } catch (InterruptedException e) {
-        e.printStackTrace();
+    // STUDENT
+    try {
+      // While either of my neighbours are eating, I cannot eat
+      while (eating[(piTID + 1) % count] || eating[(piTID + (count - 1)) % count]) {
+        wait();
       }
+      // When both neighbours are done eating, I start eating
+      eating[piTID] = true;
+    } catch (InterruptedException e) {
+      System.err.println("Monitor.pickUp():");
+      DiningPhilosophers.reportException(e);
+      System.exit(1);
     }
-
-    chopsticks[(piTID)%(chopsticks.length)] = false;
-    chopsticks[(piTID-1)%(chopsticks.length)] = false;
   }
 
   /**
@@ -46,10 +44,9 @@ public class Monitor {
    * and let others know they are available.
    */
   public synchronized void putDown(final int piTID) {
-
-    chopsticks[(piTID-1)%(chopsticks.length)] = chopsticks[(piTID)%(chopsticks.length)] = true;
-
-    this.notifyAll();
+    // STUDENT
+    eating[piTID] = false;
+    notifyAll();
   }
 
   /**
@@ -57,17 +54,18 @@ public class Monitor {
    * (while she is not eating).
    */
   public synchronized void requestTalk() {
-
-    {
-      while (!isTalking) {
-        try {
-          this.wait();
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
+    // STUDENT
+    try {
+      // I cannot talk as long as someone else is speaking
+      while (speaking) {
+        wait();
       }
-
-      isTalking = true;
+      // When no one else is talking, I can start talking
+      speaking = true;
+    } catch (InterruptedException e) {
+      System.err.println("Monitor.requestTalk():");
+      DiningPhilosophers.reportException(e);
+      System.exit(1);
     }
   }
 
@@ -76,8 +74,8 @@ public class Monitor {
    * can feel free to start talking.
    */
   public synchronized void endTalk() {
-
-    isTalking = false;
-    this.notifyAll();
+    // STUDENT
+    speaking = false;
+    notifyAll();
   }
 }

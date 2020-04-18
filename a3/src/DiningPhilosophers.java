@@ -1,3 +1,11 @@
+////////////////////////////////////////////////////////////////////
+//
+//  Written by:
+//    - Pierre-Olivier Trottier (40059235)
+//    - Nimit Jaggi (40032159)
+//
+////////////////////////////////////////////////////////////////////
+
 /**
  * Class DiningPhilosophers
  * The main starter.
@@ -59,7 +67,7 @@ public class DiningPhilosophers {
       for (int j = 0; j < iPhilosophers; j++)
         aoPhilosophers[j].join();
 
-      System.out.println("All philosophers have left. System terminates normally.");
+      System.out.println("\nAll philosophers have left. System terminates normally.");
     } catch (InterruptedException e) {
       System.err.println("main():");
       reportException(e);

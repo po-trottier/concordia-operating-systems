@@ -12,10 +12,13 @@ import java.util.Random;
  */
 public class BaseThread extends Thread {
 
+  // STUDENT
+  // Changed from 1 to 0 so it can be used as an index
+  
   /**
    * Preserves value across all instances
    */
-  public static int siNextTID = 1;
+  public static int siNextTID = 0;
 
   /**
    * Our Thread ID
@@ -75,11 +78,11 @@ public class BaseThread extends Thread {
   protected synchronized void phase1() {
     System.out.println(this.getClass().getName() + " thread [TID=" + this.iTID + "] starts PHASE I.");
     System.out.println (
-      "Some stats info in the PHASE I:\n" +
+      "Some stats info in the PHASE I:" +
           "    iTID = " + this.iTID +
           ", siNextTID = " + siNextTID +
           ", siTurn = " + siTurn +
-          ".\n    Their \"checksum\": " + (siNextTID * 100 + this.iTID * 10 + siTurn)
+          ".Their \"checksum\": " + (siNextTID * 100 + this.iTID * 10 + siTurn)
     );
     System.out.println(this.getClass().getName() + " thread [TID=" + this.iTID + "] finishes PHASE I.");
   }
@@ -91,11 +94,11 @@ public class BaseThread extends Thread {
   protected synchronized void phase2() {
     System.out.println(this.getClass().getName() + " thread [TID=" + this.iTID + "] starts PHASE II.");
     System.out.println (
-      "Some stats info in the PHASE II:\n" +
+      "Some stats info in the PHASE II:" +
           "    iTID = " + this.iTID +
           ", siNextTID = " + siNextTID +
           ", siTurn = " + siTurn +
-          ".\n    Their \"checksum\": " + (siNextTID * 100 + this.iTID * 10 + siTurn)
+          ".Their \"checksum\": " + (siNextTID * 100 + this.iTID * 10 + siTurn)
     );
     System.out.println(this.getClass().getName() + " thread [TID=" + this.iTID + "] finishes PHASE II.");
   }
